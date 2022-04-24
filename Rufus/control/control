@@ -1,0 +1,9 @@
+Package: botgen
+Priority: optional
+Section: misc
+Maintainer: @Rufu99
+Architecture: all
+Version: 4.3
+Depends: jq, bc, curl, netcat, netcat-traditional, net-tools, apache2
+Description: bot generador de keys by @Rufu99
+ bot generador de key by @Rufu99
