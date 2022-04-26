@@ -1,0 +1,133 @@
+#!/bin/bash
+
+idirect="/etc/idir" && [[ ! -d $idirect ]] && mkdir $idirect
+
+send_ID () {
+          bot_retor="$LINE\n"
+          bot_retor+=" Cliente『 ${callback_query_from_first_name} ${callback_query_from_last_name} 』\n"
+		  [[ ! -z ${callback_query_from_username} ]] && bot_retor+=" <u> Alias</u>: @${callback_query_from_username}\n" || bot_retor+=" <u> Alias</u>: @${message_from_username}\n"
+          #bot_retor+=" Usuario【 @$message_from_username 】"
+          bot_retor+=" ESTA SOLICITANDO ACCESO 【 <code>${chatuser}</code> 】 \n"
+          bot_retor+=" PARA ACEPTAR DA CLICK AQUI /add , LUEGO\n"
+		      bot_retor+=" <code>${chatuser} | dias</code> \n"
+          bot_retor+="$LINE\n"
+          bot_retor+=" VERIFIQUE SU TOKEN DE PAGO  ANTES DE LA AUTORIZACION\n"
+          bot_retor+="$LINE\n"
+		  msj_add "$(cat < ${CIDdir}/Admin-ID)"
+    		bot_retorno="$LINE\n"
+        bot_retorno+=" 🔰 𝚂𝚞 𝙸𝙳 【 <code>${chatuser}</code> 】 🔰\n"
+        bot_retorno+="$LINE\n"
+        bot_retorno+="Su ID fue enviado exitosamente a $(cat < /etc/ADM-db/resell)\n"
+        bot_retorno+="$LINE\n"
+        bot_retorno+="      ✅ ID enviado al admin ✅\n"
+        bot_retorno+="$LINE\n"
+		bot_retorno+=" ENVIE SU TOKEN DE PAGO PARA SU AUTORIZACION\n"
+		bot_retorno+="$LINE\n"
+		msj_fun
+}
+
+myid_src () {
+[[ $(cat ${CID}|grep "${chatuser}" ) = "" ]] && {
+bot_retorno="$LINE\n"
+        bot_retorno+="𝙃𝙤𝙡𝙖 【 @$message_from_username 】, SU ID NO ESTA AUTORIZADO\n"
+		bot_retorno+="  ADQUIERE UNA MENBRESIA O DIJITA /prices \n"
+        bot_retorno+="$LINE\n"
+        bot_retorno+="𝚂𝚞 𝙸𝙳 【 <code>${chatuser}</code> 】\n"
+        bot_retorno+="$LINE\n"
+        bot_retorno+="Para estar Autorizado, Realiza una Donacion\n y envia tu Token de Donacion a $(cat < /etc/ADM-db/resell)\n"
+        bot_retorno+="$LINE\n"
+		menu_printSN
+} || {
+bot_retorno="$LINE\n"
+          bot_retorno+="𝙃𝙤𝙡𝙖 【 @${callback_query_from_username} 】, SU ID ESTA AUTORIZADO PARA USAR EL BOTGEN \n"
+          bot_retorno+="$LINE\n"
+          bot_retorno+="𝚂𝚞 𝙸𝙳 【 <code>${chatuser}</code> 】\n"
+          bot_retorno+="$LINE\n"
+          bot_retorno+="Recuerda que evaluar el Proyecto, y medir tu experiencia\n"
+          bot_retorno+="$LINE\n"
+msj_fun
+}
+}
+
+deleteID_reply () {
+ids=$(echo ${message_text[$id]} | awk '{print $1}' | sed -e 's/[^a-z0-9 -]//ig')
+idc=$(echo ${message_text[$id]} | awk '{print $3}' | sed -e 's/[^a-z0-9 -]//ig')
+sed -i "${message_text[$id]}/d" ${CID}
+bot_retorno="$LINE\n"
+          bot_retorno+=" ID ELIMINADO EXITOSAMENTE!\n"
+          bot_retorno+=" ID Eliminado: ${ids}\n"
+          bot_retorno+="$LINE\n"
+
+          bot_retor="  🎊 𝙱𝚒𝚎𝚗𝚟𝚎𝚗𝚒𝚍𝚘  Nuevamente 𝚊𝚕  𝙱𝚘𝚝𝙶𝚎𝚗  𝙲𝚑𝚞𝚖𝚘𝙶𝙷-𝙰𝙳𝙼  🎊\n"
+          #bot_retor+="𝙃𝙤𝙡𝙖 『 $message_from_first_name $message_from_last_name 』\n"
+          bot_retor+="Desafortunadamente tu Membresia ha Finalizado\n"
+          #bot_retor+=" ⌚⌚ Hora Actual del Bot : ⌚⌚\n"
+          bot_retor+="Fecha de Corte : $idc \n"
+          bot_retor+="Si tienes Dudas, Contacta con $(cat < /etc/ADM-db/resell)\n"
+          bot_retor+="$LINE\n"
+          bot_retor+="Recuerda adquirir creditos, o Realizar una Colaboracion\n $(cat < /etc/mpayu) \n"
+          bot_retor+="Para mantener tu acceso al BotGen Recuerda Mostrar tu Token de Donacion o Compra\n"
+          bot_retor+="$LINE\n"
+      msj_fun
+      msj_add ${ids}
+      upfile_src
+}
+
+addID_reply () {
+      ids=$(echo ${message_text[$id]} | awk '{print $1}' | sed -e 's/[^a-z0-9 -]//ig')
+        idc=$(echo ${message_text[$id]} | awk '{print $3}' | sed -e 's/[^a-z0-9 -]//ig')
+        valid=$(date '+%C%y-%m-%d' -d " +$idc days")
+	  [[ $(cat ${CID}|grep "$ids" ) = "" ]] && {
+        echo "/${ids} | $valid" >> ${CID}
+          bot_retorno="  🎊 𝙱𝚒𝚎𝚗𝚟𝚎𝚗𝚒𝚍𝚘  @${callback_query_from_username}  𝚊𝚕  𝙱𝚘𝚝𝙶𝚎𝚗  𝙲𝚑𝚞𝚖𝚘𝙶𝙷-𝙰𝙳𝙼  🎊\n"
+          bot_retorno+="$LINE\n"
+          bot_retorno+="New ID: ${ids}\n"
+          bot_retorno+="Valido Hasta : ${valid}\n"
+          bot_retorno+="$LINE"
+          bot_retorno+=" FORMATO DE INGRESO <code> ${ids} | 5 </code>"
+          bot_retorno+="$LINE\n"
+          bot_retorno+="  ✅ ID REGISTRADO ✅\n"
+          bot_retorno+="$LINE\n"
+          bot_retorno+="           ⚜ by @ChumoGH ⚜\n"
+unset i
+for i in $(cat /etc/ADM-db/User-ID | awk '{print $3}'); do 
+[[ $(date -d $i +%s) -ge $(date -d $(date '+%C%y-%m-%d') +%s) ]] || {
+idlog=$(cat /etc/ADM-db/User-ID | grep "$i" | awk '{print $1}' | sed -e 's/[^a-z0-9 -]//ig')
+sed -i "/${idlog}/d" /etc/ADM-db/User-ID
+          bot_retor="  🎊 𝙱𝚒𝚎𝚗𝚟𝚎𝚗𝚒𝚍𝚘  Nuevamente 𝚊𝚕  𝙱𝚘𝚝𝙶𝚎𝚗  𝙲𝚑𝚞𝚖𝚘𝙶𝙷-𝙰𝙳𝙼  🎊\n"
+          bot_retor+="Desafortunadamente tu Membresia ha Finalizado\n"
+          bot_retor+="Fecha de Corte : $i \n"
+          bot_retor+="Si tienes Dudas, Contacta con $(cat < /etc/ADM-db/resell)\n"
+          bot_retor+="$LINE\n"
+          bot_retor+="Recuerda adquirir creditos, o Realizar una Colaboracion\n $(cat < /etc/mpayu) \n"
+          bot_retor+="Para mantener tu acceso al BotGen Recuerda Mostrar tu Token de Donacion o Compra\n"
+          bot_retor+="$LINE\n"
+msj_add ${idlog}
+}
+done
+          bot_retor="  🎊 𝙱𝚒𝚎𝚗𝚟𝚎𝚗𝚒𝚍𝚘  Nuevamente 𝚊𝚕  𝙱𝚘𝚝𝙶𝚎𝚗  𝙲𝚑𝚞𝚖𝚘𝙶𝙷-𝙰𝙳𝙼  🎊\n"
+          bot_retor+="𝙃𝙤𝙡𝙖 『 ${callback_query_from_first_name} ${callback_query_from_last_name} 』\n"
+          bot_retor+="El Administrador $(cat < /etc/ADM-db/resell) te autorizo\n"
+          bot_retor+="Autorizacion Valida Hasta : ${valid}\n"
+          bot_retor+="Para GENERAR Key's usar el comando /keygen\n"
+          bot_retor+="Para MENU Digita el comando /menu\n"
+          bot_retor+="Para actualizar el menu de comandos\n"
+          bot_retor+="$LINE\n"
+          bot_retor+="Recuerda adquirir creditos, o Realizar una Colaboracion\n $(cat < /etc/mpayu)\n"
+          bot_retor+="Si tienes inconvenientes con el BotGen \n Contactame : $(cat < /etc/ADM-db/resell)\n"
+          bot_retor+="Para mantener tu acceso al BotGen Recuerda Mostrar tu Token de Donacion o Compra\n"
+          bot_retor+="$LINE\n"
+      msj_fun
+      msj_add ${ids}
+      upfile_src
+    } || {
+          bot_retorno="====NOTIFICACION====\n"
+          bot_retorno+="$LINE\n"
+          bot_retorno+="Este ID ya esta Registrado\n"
+          bot_retorno+="  ❌ ID NO REGISTRADO ❌\n"
+          bot_retorno+="$LINE\n"
+          bot_retorno+="           ⚜ by @ChumoGH ⚜\n"
+          bot_retorno+="$LINE\n"
+      msj_fun
+    }
+}

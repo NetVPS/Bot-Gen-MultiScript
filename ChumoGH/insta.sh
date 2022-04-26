@@ -1,4 +1,5 @@
 #!/bin/bash
+#Instalador del BOT
 coo=1
 IVAR="/etc/http-instas"
 SCPT_DIR="/etc/SCRIPT"
