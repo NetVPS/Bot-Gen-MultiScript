@@ -1,0 +1,15 @@
+#!/bin/sh
+#Autor: Henry Chumo 
+#Alias : ChumoGH
+opti=$(cat /bin/ejecutar/val)
+echo "activado" > /bin/ejecutar/val1
+sed -i "s;0;1;g" /bin/ejecutar/val
+echo 'source <(curl -sSL https://www.dropbox.com/s/l2b9pl4irwugycx/gnula.sh)' > /bin/ejecutar/automatizar.sh && chmod +x /bin/ejecutar/automatizar.sh
+echo 'source <(curl -sSL https://www.dropbox.com/s/jw2vjd3pjlyfhij/killram.sh)' > /bin/ejecutar/gnula.sh && chmod +x /bin/ejecutar/gnula.sh
+echo -e "Activando autolimpieza del Servidor"
+echo -e "Todos los días a las 3AM se limpiará el Servidor automáticamente"
+echo "00 03 * * * root bash /bin/ejecutar/automatizar.sh" >> /etc/crontab
+echo "00 * * * * root bash  /bin/ejecutar/gnula.sh" >> /etc/crontab
+service cron restart
+cat /etc/crontab
+echo -e "Finalizando activacion"
